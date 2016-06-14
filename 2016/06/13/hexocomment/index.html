@@ -84,16 +84,24 @@
 
 
 
-<meta name="description" content="先安装git node.js到准备存放hexo博客的文件夹下进行git初始化，并与远程repo关联。再安装hexo,hexo-server.123456789101112131415161718git initgit remote add origin git@github.com:fengyaowu/hexo.gitgit fetch --allgit reset --hard origin/m">
+<meta name="description" content="hexo next 主题添加多说评论
+登陆http://duoshuo.com/ 点击我要安装，创建站点。站点地址是 Github Pages 的地址，多说域名自己填写。
+这是使用next主题，只要在themes目录的配置文件_config.yml 去掉duoshuo_shortname 注释，其值为多说域名中自己填写的那部分，并不是全部多说域名。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="多终端维护hexo">
-<meta property="og:url" content="http://yoursite.com/2016/06/14/多终端维护hexo/index.html">
+<meta property="og:title" content="hexo添加多说">
+<meta property="og:url" content="http://yoursite.com/2016/06/13/hexocomment/index.html">
 <meta property="og:site_name" content="天下第24帅">
-<meta property="og:description" content="先安装git node.js到准备存放hexo博客的文件夹下进行git初始化，并与远程repo关联。再安装hexo,hexo-server.123456789101112131415161718git initgit remote add origin git@github.com:fengyaowu/hexo.gitgit fetch --allgit reset --hard origin/m">
-<meta property="og:updated_time" content="2016-06-14T04:03:19.623Z">
+<meta property="og:description" content="hexo next 主题添加多说评论
+登陆http://duoshuo.com/ 点击我要安装，创建站点。站点地址是 Github Pages 的地址，多说域名自己填写。
+这是使用next主题，只要在themes目录的配置文件_config.yml 去掉duoshuo_shortname 注释，其值为多说域名中自己填写的那部分，并不是全部多说域名。">
+<meta property="og:image" content="http://yoursite.com/img/duoshuo.jpg">
+<meta property="og:updated_time" content="2016-06-14T07:40:10.712Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="多终端维护hexo">
-<meta name="twitter:description" content="先安装git node.js到准备存放hexo博客的文件夹下进行git初始化，并与远程repo关联。再安装hexo,hexo-server.123456789101112131415161718git initgit remote add origin git@github.com:fengyaowu/hexo.gitgit fetch --allgit reset --hard origin/m">
+<meta name="twitter:title" content="hexo添加多说">
+<meta name="twitter:description" content="hexo next 主题添加多说评论
+登陆http://duoshuo.com/ 点击我要安装，创建站点。站点地址是 Github Pages 的地址，多说域名自己填写。
+这是使用next主题，只要在themes目录的配置文件_config.yml 去掉duoshuo_shortname 注释，其值为多说域名中自己填写的那部分，并不是全部多说域名。">
+<meta name="twitter:image" content="http://yoursite.com/img/duoshuo.jpg">
 
 
 
@@ -114,9 +122,9 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2016/06/14/多终端维护hexo/"/>
+  <link rel="canonical" href="http://yoursite.com/2016/06/13/hexocomment/"/>
 
-  <title> 多终端维护hexo | 天下第24帅 </title>
+  <title> hexo添加多说 | 天下第24帅 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -246,7 +254,7 @@
             
             
               
-                多终端维护hexo
+                hexo添加多说
               
             
           </h1>
@@ -258,8 +266,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-06-14T10:32:24+08:00" content="2016-06-14">
-              2016-06-14
+            <time itemprop="dateCreated" datetime="2016-06-13T13:49:36+08:00" content="2016-06-13">
+              2016-06-13
             </time>
           </span>
 
@@ -288,8 +296,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/06/14/多终端维护hexo/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/06/14/多终端维护hexo/" itemprop="commentsCount"></span>
+                <a href="/2016/06/13/hexocomment/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/06/13/hexocomment/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -312,8 +320,10 @@
       
 
       
-        <h2 id="先安装git-node-js"><a href="#先安装git-node-js" class="headerlink" title="先安装git node.js"></a>先安装git node.js</h2><p>到准备存放hexo博客的文件夹下进行git初始化，并与远程repo关联。再安装hexo,hexo-server.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">git init</span><br><span class="line">git remote add origin git@github.com:fengyaowu/hexo.git</span><br><span class="line">git fetch --all</span><br><span class="line">git reset --hard origin/master</span><br><span class="line">hexo g</span><br><span class="line">npm install hexo --save</span><br><span class="line">npm install hexo-server --save</span><br><span class="line">npm install #如果当前路径下存在package.json的依赖的包描述文件，则可以直接执行 npm install 既可以把所有需要的包安装上。</span><br><span class="line">hexo new test</span><br><span class="line">hexo g</span><br><span class="line">hexo s</span><br><span class="line">hexo d</span><br><span class="line">git add .</span><br><span class="line">git status</span><br><span class="line">git commit -m &apos;new text&apos;</span><br><span class="line">git push</span><br><span class="line">git push --set-upstream origin master</span><br><span class="line">git pull</span><br></pre></td></tr></table></figure></p>
-<h2 id="相关链接"><a href="#相关链接" class="headerlink" title="相关链接"></a>相关链接</h2><p>  <a href="http://chitanda.me/2015/06/18/hexo-sync-in-multiple-pc/" target="_blank" rel="external">hexo 同步</a></p>
+        <h2 id="hexo-next-主题添加多说评论"><a href="#hexo-next-主题添加多说评论" class="headerlink" title="hexo next 主题添加多说评论"></a>hexo next 主题添加多说评论</h2><ul>
+<li>登陆<a href="http://duoshuo.com/" target="_blank" rel="external">http://duoshuo.com/</a> 点击我要安装，创建站点。站点地址是 Github Pages 的地址，多说域名自己填写。<br><img src="/img/duoshuo.jpg" alt=""></li>
+<li>这是使用next主题，只要在themes目录的配置文件_config.yml 去掉duoshuo_shortname 注释，其值为多说域名中自己填写的那部分，并不是全部多说域名。 </li>
+</ul>
 
       
     </div>
@@ -344,13 +354,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/06/14/hello-world/" rel="next" title="Hello World">
-                <i class="fa fa-chevron-left"></i> Hello World
-              </a>
-            
           </div>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/06/13/hexo写作/" rel="prev" title="hexo写作">
+                hexo写作 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -376,8 +386,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/06/14/多终端维护hexo/"
-           data-title="多终端维护hexo" data-url="http://yoursite.com/2016/06/14/多终端维护hexo/">
+      <div class="ds-thread" data-thread-key="2016/06/13/hexocomment/"
+           data-title="hexo添加多说" data-url="http://yoursite.com/2016/06/13/hexocomment/">
       </div>
     
   </div>
@@ -479,7 +489,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#先安装git-node-js"><span class="nav-number">1.</span> <span class="nav-text">先安装git node.js</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相关链接"><span class="nav-number">2.</span> <span class="nav-text">相关链接</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#hexo-next-主题添加多说评论"><span class="nav-number">1.</span> <span class="nav-text">hexo next 主题添加多说评论</span></a></li></ol></div>
             
           </div>
         </section>
