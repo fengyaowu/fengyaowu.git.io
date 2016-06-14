@@ -248,8 +248,8 @@
             
               
                 
-                <a class="post-title-link" href="/2016/06/14/test/" itemprop="url">
-                  test
+                <a class="post-title-link" href="/2016/06/14/多终端维护hexo/" itemprop="url">
+                  多终端维护hexo
                 </a>
               
             
@@ -267,6 +267,25 @@
             </time>
           </span>
 
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/github/" itemprop="url" rel="index">
+                    <span itemprop="name">github</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
           
 
           
@@ -292,7 +311,9 @@
       
         
           
-            
+            <h2 id="先安装git-node-js"><a href="#先安装git-node-js" class="headerlink" title="先安装git node.js"></a>先安装git node.js</h2><p>到准备存放hexo博客的文件夹下进行git初始化，并与远程repo关联。再安装hexo,hexo-server.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">git init</span><br><span class="line">git remote add origin git@github.com:fengyaowu/hexo.git</span><br><span class="line">git fetch --all</span><br><span class="line">git reset --hard origin/master</span><br><span class="line">hexo g</span><br><span class="line">npm install hexo --save</span><br><span class="line">npm install hexo-server --save</span><br><span class="line">npm install #如果当前路径下存在package.json的依赖的包描述文件，则可以直接执行 npm install 既可以把所有需要的包安装上。</span><br><span class="line">hexo new test</span><br><span class="line">hexo g</span><br><span class="line">hexo s</span><br><span class="line">hexo d</span><br><span class="line">git add .</span><br><span class="line">git status</span><br><span class="line">git commit -m &apos;new text&apos;</span><br><span class="line">git push</span><br><span class="line">git push --set-upstream origin master</span><br><span class="line">git pull</span><br></pre></td></tr></table></figure></p>
+<h2 id="相关链接"><a href="#相关链接" class="headerlink" title="相关链接"></a>相关链接</h2><p>  <a href="http://chitanda.me/2015/06/18/hexo-sync-in-multiple-pc/" target="_blank" rel="external">hexo 同步</a></p>
+
           
         
       
