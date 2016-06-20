@@ -1,0 +1,702 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="翻墙,squid,stunnel,vpn代理，转载," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="转载　　GFW让国内的码农们要比国外同行们必须多掌握一门必备技能：翻墙。　　就为了更好的上网体验，天朝上国的我们要跟移动、联通、电信(死比运营商肆无忌惮搞网络劫持推送广告)，工信部(互联网内容审查)，GFW作斗争，浪费大好光阴，真是想想就让人想爆粗。这不，大GFW最近技术又牛逼了，goagent已经被墙的半身不遂了。。有这技术研究点别的多好，天朝的网络审查制度典型的”把洗澡水和孩子一起泼了”：翻墙">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用squid+stunnel搭建自己的翻墙服务器">
+<meta property="og:url" content="http://yoursite.com/2016/06/16/squid+stunnel 搭建自己的翻墙服务器/index.html">
+<meta property="og:site_name" content="天下第24帅">
+<meta property="og:description" content="转载　　GFW让国内的码农们要比国外同行们必须多掌握一门必备技能：翻墙。　　就为了更好的上网体验，天朝上国的我们要跟移动、联通、电信(死比运营商肆无忌惮搞网络劫持推送广告)，工信部(互联网内容审查)，GFW作斗争，浪费大好光阴，真是想想就让人想爆粗。这不，大GFW最近技术又牛逼了，goagent已经被墙的半身不遂了。。有这技术研究点别的多好，天朝的网络审查制度典型的”把洗澡水和孩子一起泼了”：翻墙">
+<meta property="og:image" content="http://ww3.sinaimg.cn/large/62d95157gw1eu5kesk5m5j20dw0c2js1.jpg">
+<meta property="og:updated_time" content="2016-06-16T09:13:27.519Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用squid+stunnel搭建自己的翻墙服务器">
+<meta name="twitter:description" content="转载　　GFW让国内的码农们要比国外同行们必须多掌握一门必备技能：翻墙。　　就为了更好的上网体验，天朝上国的我们要跟移动、联通、电信(死比运营商肆无忌惮搞网络劫持推送广告)，工信部(互联网内容审查)，GFW作斗争，浪费大好光阴，真是想想就让人想爆粗。这不，大GFW最近技术又牛逼了，goagent已经被墙的半身不遂了。。有这技术研究点别的多好，天朝的网络审查制度典型的”把洗澡水和孩子一起泼了”：翻墙">
+<meta name="twitter:image" content="http://ww3.sinaimg.cn/large/62d95157gw1eu5kesk5m5j20dw0c2js1.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/06/16/squid+stunnel 搭建自己的翻墙服务器/"/>
+
+  <title> 使用squid+stunnel搭建自己的翻墙服务器 | 天下第24帅 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">天下第24帅</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                使用squid+stunnel搭建自己的翻墙服务器
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-06-16T10:30:38+08:00" content="2016-06-16">
+              2016-06-16
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/网络/" itemprop="url" rel="index">
+                    <span itemprop="name">网络</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/06/16/squid+stunnel 搭建自己的翻墙服务器/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/06/16/squid+stunnel 搭建自己的翻墙服务器/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+        <div class="post-gallery" itemscope itemtype="http://schema.org/ImageGallery">
+          
+          
+            <div class="post-gallery-row">
+              <a class="post-gallery-img fancybox"
+                 href="http://ww3.sinaimg.cn/large/62d95157gw1eu5kesk5m5j20dw0c2js1.jpg" rel="gallery_cipi3ac0a000ciwm97v0ab5gd"
+                 itemscope itemtype="http://schema.org/ImageObject" itemprop="url">
+                <img src="http://ww3.sinaimg.cn/large/62d95157gw1eu5kesk5m5j20dw0c2js1.jpg" itemprop="contentUrl"/>
+              </a>
+            
+          
+
+          
+          </div>
+        </div>
+      
+
+      
+        <p><a href="http://www.5941740.cn/2015/07/17/%E4%BD%BF%E7%94%A8squid-stunnel%E6%90%AD%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E7%BF%BB%E5%A2%99%E6%9C%8D%E5%8A%A1%E5%99%A8/" target="_blank" rel="external">转载</a><br>　　GFW让国内的码农们要比国外同行们必须多掌握一门必备技能：<strong>翻墙</strong>。<br>　　就为了更好的上网体验，天朝上国的我们要跟移动、联通、电信(死比运营商肆无忌惮搞网络劫持推送广告)，工信部(互联网内容审查)，GFW作斗争，浪费大好光阴，真是想想就让人想<a href="http://www.bilibili.com/video/av2550217" target="_blank" rel="external"><strong>爆粗</strong></a>。这不，大GFW最近技术又牛逼了，goagent已经被墙的半身不遂了。。有这技术研究点别的多好，天朝的网络审查制度典型的”把洗澡水和孩子一起泼了”：翻墙的除了去看法哔功的，也有社会主义现代化建设的我们啊。<br>　　我本身翻墙的时候不多，用上的时候开下goagent基本也能对付了，虽然对限制自由这事很不爽，但也只能不爽了。可最近goagent也总是不能用了，这尼玛还咋玩。。<br>　　租用的国外服务器只部署个博客好像有点浪费，这基本只有我自己看的玩意儿能用多少流量，太浪费了啊。于是想着是否可以自己搭建个代理实现肉身翻墙呢？<br>　　下面是我折腾的通过<em>国外服务器+squid+stunnel+chrome+SwitchOmege</em>实现的代理翻墙方式，照着操作你也可以。</p>
+<a id="more"></a>
+<h1 id="翻墙原理"><a href="#翻墙原理" class="headerlink" title="翻墙原理"></a>翻墙原理</h1><p>　　1. 客户端向stunnel服务器发送访问请求<br>　　2. stunnel将请求加密后发送给代理服务器的stunnel服务<br>　　3. 代理服务器的stunnel服务接收到请求后将请求解密发送给代理服务器的squid服务<br>　　4. squid服务接收到实际的客户端访问请求(经过了加密解密处理)，向目标网站请求并返回数据</p>
+<p>　　之所以要加上stunnel加密，是因为GFW会把请求墙掉，导致原始请求连代理服务器都发送不过去。</p>
+<h1 id="物料准备"><a href="#物料准备" class="headerlink" title="物料准备"></a>物料准备</h1><p>　　1. 国外服务器，可以正常无限制访问互联网，用来代理国内被墙的请求<br>　　2. 国内服务器，可以是服务器也可以是自己的主机，用来做stunnel加密服务器<br>　　3. stunnel，squid，chrom以及chrome下的代理插件SwitchOmega(stunnel，squid必须，客户端代理可以采取别的浏览器)</p>
+<h1 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h1><p>　　1. 我的国外服务器系统是Centos 6.0-x86，以下称为服务器A<br>　　2. 我的国内stunnel采用的也是服务器部署，之所以没有采用自己的主机，考虑到如果将stunnel加密服务也部署在我的客户端上的话，只要我电脑关机后就要重新启动stunnel服务，而且如果换电脑的话就不能用了。因此将服务和客户端分开了，没有条件的可以将stunnel加密服务搭建在自己的主机上亦可。以下称stunnel加密服务器为服务器B，自己用来上网的电脑称为客户端。<br>　　服务器Ｂ的系统是Linux 2.6.32。</p>
+<h1 id="搭建步骤"><a href="#搭建步骤" class="headerlink" title="搭建步骤"></a>搭建步骤</h1><h2 id="服务器A上安装squid以及stunnel"><a href="#服务器A上安装squid以及stunnel" class="headerlink" title="服务器A上安装squid以及stunnel"></a>服务器A上安装squid以及stunnel</h2><ul>
+<li>安装squid<br><code>yum install squid</code></li>
+<li>修改squid配置文件：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/squid/squid.conf      #路径以自己安装的为准</span><br></pre></td></tr></table></figure>
+<p>将配置文件的<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">http_access deny all</span><br><span class="line">修改为</span><br><span class="line">http_access allow all</span><br><span class="line">其余多余的http_access选项删除</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li><p>启动squid<br><code>service squid start</code></p>
+</li>
+<li><p>安装stunnel<br><code>yum install stunnel</code><br>由于需要stunnel进行加密，因此还需要生成相应的密钥：(依赖openssl，通常linux发行版都自带了，如果没有预装可以自行安装)</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/etc/stunnel/</span><br><span class="line">openssl req -new -x509 -days 1000 -nodes -out stunnel.pem -keyout stunnel.pem  </span><br><span class="line">#生成一个有效时间1000天的证书文件stunnel.pem</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>修改配置文件</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /usr/local/etc/stunnel/stunnel.conf    #路径以自己安装的为准</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>我的配置文件：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">fips=no</span><br><span class="line">syslog=yes</span><br><span class="line">debug=7</span><br><span class="line">output=/var/log/stunnel.log</span><br><span class="line">setuid=root                        #我是部署在root账户下，看部署的账户了 </span><br><span class="line">setgid=root                          </span><br><span class="line">pid=/var/run/stunnel.pid</span><br><span class="line">cert=/usr/local/etc/stunnel/stunnel.pem     #上述生成的证书文件路径</span><br><span class="line">key=/usr/local/etc/stunnel/stunnel.pem</span><br><span class="line">client=no</span><br><span class="line">[squid]</span><br><span class="line">accept=443                         #stunnel的监听接口 </span><br><span class="line">connect=127.0.0.1:3128             #服务器A的connect配置基本没啥用</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>启动stunnel<br><code>stunnel stunnel.conf</code></li>
+</ul>
+<h1 id="服务器B上安装stunnel"><a href="#服务器B上安装stunnel" class="headerlink" title="服务器B上安装stunnel"></a>服务器B上安装stunnel</h1><p>在服务器B上安装stunnel，步骤类似服务器A，需要注意的是，证书文件可以和服务器A一样，直接复制过来即可。</p>
+<ul>
+<li><p>修改配置文件：<br>我的配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">cert = ./stunnel.pem               #复制过来的证书文件路径</span><br><span class="line">socket = l:TCP_NODELAY=1</span><br><span class="line">socket = r:TCP_NODELAY=1</span><br><span class="line">verify = 2</span><br><span class="line">CAfile = ./stunnel.pem</span><br><span class="line">client=yes</span><br><span class="line">compression = zlib</span><br><span class="line">ciphers = AES256-SHA</span><br><span class="line">delay = no</span><br><span class="line">failover = prio</span><br><span class="line">sslVersion = TLSv1</span><br><span class="line">fips = no</span><br><span class="line">[sproxy]</span><br><span class="line">accept  = 8888                     					#服务器B上stunnel的监听端口，可以随便设，影响客户端的代理设置 </span><br><span class="line">connect = 服务器A的IP:服务器A的stunnel监听端口      #填写服务器A的IP和端口，用来和A交互</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>启动stunnel</p>
+</li>
+</ul>
+<h1 id="Tests"><a href="#Tests" class="headerlink" title="Tests"></a>Tests</h1><p>配置差不多了，配置下客户端代理试试看吧</p>
+<ol>
+<li>下载chrome浏览器下的代理管理插件SwitchOmega</li>
+<li>配置代理地址<br><img src="http://ww1.sinaimg.cn/large/62d95157gw1eu5s08oeo9j20o605jmy2.jpg" alt=""><br>代理地址填写服务器B的地址，端口填写服务器B上stunnel服务器的监听端口</li>
+</ol>
+<p>访问被墙地址的时候将模式切换到设置的该模式。</p>
+<p><img src="http://ww1.sinaimg.cn/large/62d95157gw1eu5tgaewnxj20p508m76l.jpg" alt=""></p>
+<p>Ｇｏｏｄ！</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/翻墙/" rel="tag">#翻墙</a>
+          
+            <a href="/tags/squid/" rel="tag">#squid</a>
+          
+            <a href="/tags/stunnel/" rel="tag">#stunnel</a>
+          
+            <a href="/tags/vpn代理，转载/" rel="tag">#vpn代理，转载</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/06/15/github 上搭建hexo博客跟换域名/" rel="next" title="github 上搭建hexo博客跟换域名">
+                <i class="fa fa-chevron-left"></i> github 上搭建hexo博客跟换域名
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/06/16/squid+stunnel 搭建自己的翻墙服务器/"
+           data-title="使用squid+stunnel搭建自己的翻墙服务器" data-url="http://yoursite.com/2016/06/16/squid+stunnel 搭建自己的翻墙服务器/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="FYW" />
+          <p class="site-author-name" itemprop="name">FYW</p>
+          <p class="site-description motion-element" itemprop="description">软件是积木堆起来的,系统是积木堆起来的,世界也是积木堆起来的。</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">7</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/fengyaowu" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#翻墙原理"><span class="nav-number">1.</span> <span class="nav-text">翻墙原理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#物料准备"><span class="nav-number">2.</span> <span class="nav-text">物料准备</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#环境"><span class="nav-number">3.</span> <span class="nav-text">环境</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#搭建步骤"><span class="nav-number">4.</span> <span class="nav-text">搭建步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#服务器A上安装squid以及stunnel"><span class="nav-number">4.1.</span> <span class="nav-text">服务器A上安装squid以及stunnel</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#服务器B上安装stunnel"><span class="nav-number">5.</span> <span class="nav-text">服务器B上安装stunnel</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Tests"><span class="nav-number">6.</span> <span class="nav-text">Tests</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">FYW</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"myhexo2013"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>
